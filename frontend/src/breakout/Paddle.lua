@@ -53,31 +53,50 @@ function Paddle:update(dt)
     elseif self.size == 4 then
         self.width = 128
     end
-    
 
-    -- keyboard input
-    if love.keyboard.isDown('left') then
+    -- keyboard
+    local moveLeft = love.keyboard.isDown('left')
+    local moveRight = love.keyboard.isDown('right')
+
+    -- joystick (if any available)
+    local joysticks = love.joystick.getJoysticks()
+    local joystick = joysticks[1] 
+
+    if joystick and joystick:isGamepad() then
+        -- analogic
+        local axis = joystick:getGamepadAxis("leftx")
+        if axis < -0.2 then
+            moveLeft = true
+        elseif axis > 0.2 then
+            moveRight = true
+        end
+
+        -- D-Pad
+        if joystick:isGamepadDown("dpleft") then
+            moveLeft = true
+        end
+        if joystick:isGamepadDown("dpright") then
+            moveRight = true
+        end
+    end
+
+    -- logic
+    if moveLeft then
         self.dx = -PADDLE_SPEED
-    elseif love.keyboard.isDown('right') then
+    elseif moveRight then
         self.dx = PADDLE_SPEED
     else
         self.dx = 0
     end
 
-    -- math.max here ensures that we're the greater of 0 or the player's
-    -- current calculated Y position when pressing up so that we don't
-    -- go into the negatives; the movement calculation is simply our
-    -- previously-defined paddle speed scaled by dt
+    -- screen boundaries
     if self.dx < 0 then
         self.x = math.max(0, self.x + self.dx * dt)
-    -- similar to before, this time we use math.min to ensure we don't
-    -- go any farther than the bottom of the screen minus the paddle's
-    -- height (or else it will go partially below, since position is
-    -- based on its top left corner)
     else
         self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
     end
 end
+
 
 --[[
     Render the paddle by drawing the main texture, passing in the quad
