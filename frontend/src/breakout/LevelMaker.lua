@@ -31,21 +31,21 @@ LevelMaker = Class{}
     brick colors and tiers to choose based on the level passed in.
 ]]
 
-function LevelMaker.createMap(level)
+function LevelMaker.createMap(level,brickCount)
     local bricks = {}
 
     local brickWidth = 32
     local brickHeight = 16
 
     -- quanti mattoni per riga (senza superare la larghezza virtuale)
-    local bricksPerRow = math.min(BRICK_COUNT, math.floor(VIRTUAL_WIDTH / brickWidth))
-    local totalRows = math.ceil(BRICK_COUNT / bricksPerRow)
+    local bricksPerRow = math.min(brickCount, math.floor(VIRTUAL_WIDTH / brickWidth))
+    local totalRows = math.ceil(brickCount / bricksPerRow)
 
     local brickIndex = 0
 
     for row = 1, totalRows do
         -- numero effettivo di mattoni in questa riga (potrebbe essere incompleta)
-        local bricksInThisRow = math.min(BRICK_COUNT - brickIndex, bricksPerRow)
+        local bricksInThisRow = math.min(brickCount - brickIndex, bricksPerRow)
 
         -- calcola xStart per centrare la riga
         local totalRowWidth = bricksInThisRow * brickWidth

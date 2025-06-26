@@ -16,6 +16,11 @@
 
 PlayState = Class{__includes = BaseState}
 
+
+function PlayState:setChaosController(chaos)
+    self.chaos = chaos
+end
+
 --[[
     We initialize what's in our PlayState via a state table that we pass between
     states as we go from playing to serving.
@@ -36,7 +41,6 @@ function PlayState:enter(params)
 
     self.recoverPoints = params.recoverPoints
 
-    self.chaos = ChaosController()
     self.chaos:saveInitialLayout(self.bricks)
 
     self.balls = {}
@@ -219,6 +223,7 @@ function PlayState:update(dt)
                 -- trigger the brick's hit function, which removes it from play
                 brick:hit()
                 print("[DEBUG] Brick hit at x=" .. brick.x .. " y=" .. brick.y)
+                self.chaos:removeBrick()
                 if not brick.inPlay then
                     self.brickCount = self.brickCount - 1
                     if brick.hasPowerUp then

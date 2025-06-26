@@ -1,9 +1,16 @@
+local http = require("lib.http")
+local json = require("lib.json")
 ChaosController = Class{}
 
 function ChaosController:init()
     self.timer = 0
     self.interval = 5         -- ogni 5 secondi
     self.pendingBricks = 0    -- quanti brick aggiungere
+end
+
+function ChaosController:saveRemoteEndpoint(host,port)
+    self.host=host
+    self.port=port
 end
 
 function ChaosController:saveInitialLayout(bricks)
@@ -54,13 +61,23 @@ function ChaosController:update(dt, bricks)
 end
 
 function ChaosController:queryExternalBrickCount(bricks)
-    local count = 0
-    for _, brick in ipairs(bricks) do
-        if brick.inPlay then
-            count = count + 1
-        end
+    local response_body = {}
+    local url = "http://"..self.host .. ":" .. self.port .. "/victims"
+    local body, err = http.get(url)
+
+    if not body then
+        print("Errore HTTP:", err)
+        return
     end
-    return count + 1
+
+    local data = json.decode(body)
+    if data and data.count then
+        print("Numero di vittime:", data.count)
+        return data.count
+    else
+        print("Errore JSON")
+        return 1
+    end
 end
 
 
@@ -98,6 +115,16 @@ function ChaosController:addBricks(bricks)
     end
 end
 
+function ChaosController:removeBrick()
+    print("[CHAOS] Brick removed")
+    local url = "http://"..self.host .. ":" .. self.port .. "/kill"
+    local post_result, post_err = http.post(url)
+    if post_result then
+        print("Risposta POST:", post_result)
+    else
+        print("Errore POST:", post_err)
+    end
+end
 
 function ChaosController:removeBricks(count, bricks)
     local removed = 0
@@ -106,6 +133,13 @@ function ChaosController:removeBricks(count, bricks)
             brick.inPlay = false
             removed = removed + 1
             print("[CHAOS] Brick removed at x=" .. brick.x .. " y=" .. brick.y)
+            local url = "http://"..self.host .. ":" .. self.port .. "/kill"
+            local post_result, post_err = http.post(url)
+            if post_result then
+                print("Risposta POST:", post_result)
+            else
+                print("Errore POST:", post_err)
+            end
             if removed == count then
                 break
             end

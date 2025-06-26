@@ -72,6 +72,12 @@ gSounds = {
     ['music']       = love.audio.newSource('assets/breakout/sounds/music.wav', 'stream')
 }
 
+chaos = ChaosController()
+chaos:saveRemoteEndpoint("localhost","8181")
+
+playState = PlayState()
+playState:setChaosController(chaos)
+
 -- the state machine we'll be using to transition between various states
 -- in our game instead of clumping them together in our update and draw
 -- methods
@@ -85,7 +91,7 @@ gSounds = {
 -- 6. 'game-over' (the player has lost; display score and allow restart)
 gStateMachine = StateMachine {
     ['start'] = function() return StartState() end,
-    ['play'] = function() return PlayState() end,
+    ['play'] = function() return playState end,
     ['serve'] = function() return ServeState() end,
     ['game-over'] = function() return GameOverState() end,
     ['victory'] = function() return VictoryState() end,

@@ -1,0 +1,14 @@
+env: kubernetes
+
+kubernetes:
+  config_path: ~/.kube/config
+  namespace: test-chaos-ns
+
+aws:
+  region: us-west-2
+  service: ecs
+  cluster: my-cluster
+
+azure:
+  subscription_id: xxx
+  resource_group: xxx
