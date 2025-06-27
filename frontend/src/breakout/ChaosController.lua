@@ -14,10 +14,17 @@ function ChaosController:saveRemoteEndpoint(host,port)
 end
 
 function ChaosController:saveInitialLayout(bricks)
+    -- If already exists, don't overwrite
+    if self.initialLayout and #self.initialLayout > 0 then
+        return
+    end
+
     self.initialLayout = {}
 
     for _, brick in ipairs(bricks) do
         table.insert(self.initialLayout, {
+            col = brick.col,
+            row = brick.row,
             x = brick.x,
             y = brick.y,
             color = brick.color,
@@ -28,12 +35,12 @@ end
 
 
 function ChaosController:update(dt, bricks)
+    
     self.timer = self.timer + dt
-
+    
     if self.timer >= self.interval then
         self.timer = self.timer - self.interval
 
-        -- Simula input esterno: richiedi 1 nuovo brick
         local externalCount = self:queryExternalBrickCount(bricks)
 
         -- Conta quanti brick sono attualmente attivi
@@ -72,7 +79,7 @@ function ChaosController:queryExternalBrickCount(bricks)
 
     local data = json.decode(body)
     if data and data.count then
-        print("Numero di vittime:", data.count)
+        print("Numero di pod sul cluster:", data.count)
         return data.count
     else
         print("Errore JSON")
@@ -90,6 +97,9 @@ function ChaosController:addBricks(bricks)
         if brick.inPlay then
             occupied[brick.x] = occupied[brick.x] or {}
             occupied[brick.x][brick.y] = true
+            print(string.format("[CHAOS] Brick inPlay at x=%d y=%d", brick.x, brick.y))
+        else
+            print(string.format("[CHAOS] Brick free at x=%d y=%d", brick.x, brick.y))
         end
     end
 
