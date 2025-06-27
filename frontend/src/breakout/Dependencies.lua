@@ -13,7 +13,6 @@ require 'src/breakout/states/PlayState'
 require 'src/breakout/states/ServeState'
 require 'src/breakout/states/GameOverState'
 require 'src/breakout/states/WinState'
-require 'src/breakout/states/VictoryState'
 
 -- Game objects
 require 'src/breakout/Ball'
@@ -66,7 +65,6 @@ gSounds = {
     ['brick-hit-2'] = love.audio.newSource('assets/breakout/sounds/brick-hit-2.wav', 'static'),
     ['hurt']        = love.audio.newSource('assets/breakout/sounds/hurt.wav', 'static'),
     ['recover']     = love.audio.newSource('assets/breakout/sounds/recover.wav', 'static'),
-    ['victory']     = love.audio.newSource('assets/breakout/sounds/victory.wav', 'static'),
     ['pause']       = love.audio.newSource('assets/breakout/sounds/pause.wav', 'static'),
     ['powerup']     = love.audio.newSource('assets/breakout/sounds/powerup.wav', 'static'),
     ['music']       = love.audio.newSource('assets/breakout/sounds/music.wav', 'stream')
@@ -87,72 +85,18 @@ playState:setChaosController(chaos)
 -- 2. 'paddle-select' (where we get to choose the color of our paddle)
 -- 3. 'serve' (waiting on a key press to serve the ball)
 -- 4. 'play' (the ball is in play, bouncing between paddles)
--- 5. 'victory' (the current level is over, with a victory jingle)
+-- 5. 'win' (game won)
 -- 6. 'game-over' (the player has lost; display score and allow restart)
 gStateMachine = StateMachine {
     ['start'] = function() return StartState() end,
     ['play'] = function() return playState end,
     ['serve'] = function() return ServeState() end,
     ['game-over'] = function() return GameOverState() end,
-    ['victory'] = function() return VictoryState() end,
-    ['high-scores'] = function() return HighScoreState() end,
-    ['enter-high-score'] = function() return EnterHighScoreState() end,
     ['win'] = function() return WinState() end,
     ['paddle-select'] = function() return PaddleSelectState() end
 }
 
 BRICK_COUNT = 30
-
-
---[[
-    Loads high scores from a .lst file, saved in LÖVE2D's default save directory in a subfolder
-    called 'breakout'.
-]]
-function loadHighScores()
-    love.filesystem.setIdentity('breakout')
-
-    -- if the file doesn't exist, initialize it with some default scores
-    if not love.filesystem.getInfo('breakout.lst') then
-        local scores = ''
-        for i = 10, 1, -1 do
-            scores = scores .. 'CTO\n'
-            scores = scores .. tostring(i * 1000) .. '\n'
-        end
-
-        love.filesystem.write('breakout.lst', scores)
-    end
-
-    -- flag for whether we're reading a name or not
-    local name = true
-    local currentName = nil
-    local counter = 1
-
-    -- initialize scores table with at least 10 blank entries
-    local scores = {}
-
-    for i = 1, 10 do
-        -- blank table; each will hold a name and a score
-        scores[i] = {
-            name = nil,
-            score = nil
-        }
-    end
-
-    -- iterate over each line in the file, filling in names and scores
-    for line in love.filesystem.lines('breakout.lst') do
-        if name then
-            scores[counter].name = string.sub(line, 1, 3)
-        else
-            scores[counter].score = tonumber(line)
-            counter = counter + 1
-        end
-
-        -- flip the name flag
-        name = not name
-    end
-
-    return scores
-end
 
 --[[
     Renders hearts based on how much health the player has. First renders

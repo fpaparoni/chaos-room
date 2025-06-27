@@ -21,7 +21,6 @@ StartState = Class{__includes = BaseState}
 local highlighted = 1
 
 function StartState:enter(params)
-    self.highScores = params.highScores
 end
 
 function StartState:update(dt)
@@ -34,16 +33,8 @@ function StartState:update(dt)
     -- confirm whichever option we have selected to change screens
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         gSounds['confirm']:play()
-
-        if highlighted == 1 then
-            gStateMachine:change('paddle-select', {
-                highScores = self.highScores
-            })
-        else
-            gStateMachine:change('high-scores', {
-                highScores = self.highScores
-            })
-        end
+        gStateMachine:change('paddle-select', {
+        })
     end
 
     -- we no longer have this globally, so include here

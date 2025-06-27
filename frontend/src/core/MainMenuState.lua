@@ -26,7 +26,6 @@ function MainMenuState:update(dt)
                 bricks = LevelMaker.createMap(1,chaos:queryExternalBrickCount()),
                 health = 3,
                 score = 0,
-                highScores = {},
                 ball = ball,
                 level = 1,
                 recoverPoints = 5000
