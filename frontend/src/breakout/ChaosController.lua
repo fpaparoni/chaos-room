@@ -1,16 +1,12 @@
 local http = require("lib.http")
 local json = require("lib.json")
+local Session = require 'src.core.Session'
 ChaosController = Class{}
 
 function ChaosController:init()
     self.timer = 0
     self.interval = 5         -- ogni 5 secondi
     self.pendingBricks = 0    -- quanti brick aggiungere
-end
-
-function ChaosController:saveRemoteEndpoint(host,port)
-    self.host=host
-    self.port=port
 end
 
 function ChaosController:saveInitialLayout(bricks)
@@ -69,7 +65,7 @@ end
 
 function ChaosController:queryExternalBrickCount(bricks)
     local response_body = {}
-    local url = "http://"..self.host .. ":" .. self.port .. "/victims"
+    local url = "http://".. Session.host .. ":" .. Session.port .. "/victims"
     local body, err = http.get(url)
 
     if not body then
@@ -127,7 +123,8 @@ end
 
 function ChaosController:removeBrick()
     print("[CHAOS] Brick removed")
-    local url = "http://"..self.host .. ":" .. self.port .. "/kill"
+    Session.count=Session.count+1;
+    local url = "http://"..Session.host .. ":" .. Session.port .. "/kill"
     local post_result, post_err = http.post(url)
     if post_result then
         print("Risposta POST:", post_result)
@@ -143,7 +140,7 @@ function ChaosController:removeBricks(count, bricks)
             brick.inPlay = false
             removed = removed + 1
             print("[CHAOS] Brick removed at x=" .. brick.x .. " y=" .. brick.y)
-            local url = "http://"..self.host .. ":" .. self.port .. "/kill"
+            local url = "http://"..Session.host .. ":" .. Session.port .. "/kill"
             local post_result, post_err = http.post(url)
             if post_result then
                 print("Risposta POST:", post_result)

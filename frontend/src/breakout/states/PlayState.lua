@@ -13,7 +13,7 @@
     the player should lose one point of health and be taken either to the Game
     Over screen if at 0 health or the Serve screen otherwise.
 ]]
-
+local Session = require 'src.core.Session'
 PlayState = Class{__includes = BaseState}
 
 
@@ -41,6 +41,8 @@ function PlayState:enter(params)
     self.recoverPoints = params.recoverPoints
 
     self.chaos:saveInitialLayout(self.bricks)
+
+    Session.startTime=os.time()
 
     self.balls = {}
     self.ballCount = 1
@@ -252,6 +254,7 @@ function PlayState:update(dt)
 
                 -- go to our victory screen if there are no more bricks left
                 if self:checkVictory() then
+                    Session.endTime=os.time()
                     gSounds['music']:stop()
                     gStateMachine:change('win')
                 end

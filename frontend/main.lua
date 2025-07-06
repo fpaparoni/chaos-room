@@ -14,7 +14,7 @@ VIRTUAL_HEIGHT = 243
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
-    love.window.setTitle("Arcade Launcher")
+    love.window.setTitle("Chaos Room")
 
     math.randomseed(os.time())
 

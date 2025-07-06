@@ -1,3 +1,6 @@
+
+local Session = require 'src.core.Session'
+
 WinState = Class{__includes = BaseState}
 
 function WinState:enter()
@@ -14,17 +17,8 @@ function WinState:update(dt)
 end
 
 function WinState:render()
-    -- calcola i fattori di scala in base alla risoluzione virtuale
-    local scaleX = VIRTUAL_WIDTH / self.image:getWidth()
-    local scaleY = VIRTUAL_HEIGHT / self.image:getHeight()
-    
-    -- usa il min per mantenere le proporzioni (letterbox effect)
-    local scale = math.min(scaleX, scaleY)
-
-    -- calcola offset per centrare l'immagine
-    local offsetX = (VIRTUAL_WIDTH - self.image:getWidth() * scale) / 2
-    local offsetY = (VIRTUAL_HEIGHT - self.image:getHeight() * scale) / 2
-
-    -- disegna l'immagine scalata e centrata
-    love.graphics.draw(self.image, offsetX, offsetY, 0, scale, scale)
+    love.graphics.clear(0, 0, 0, 1)
+    love.graphics.setFont(gFonts['large'])
+    duration = Session.endTime - Session.startTime
+    love.graphics.printf('You won!\nChaos victims: ' .. Session.count .. '\nTime:'.. duration ..' seconds', 0, VIRTUAL_HEIGHT / 2 - 20, VIRTUAL_WIDTH, 'center')
 end

@@ -71,7 +71,6 @@ gSounds = {
 }
 
 chaos = ChaosController()
-chaos:saveRemoteEndpoint("localhost","8181")
 
 playState = PlayState()
 playState:setChaosController(chaos)
