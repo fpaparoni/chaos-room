@@ -19,9 +19,9 @@ function love.load()
     math.randomseed(os.time())
 
     gFonts = {
-        ['small']  = love.graphics.newFont('assets/shared/fonts/font.ttf', 8),
-        ['medium'] = love.graphics.newFont('assets/shared/fonts/font.ttf', 16),
-        ['large']  = love.graphics.newFont('assets/shared/fonts/font.ttf', 32)
+        ['small']  = love.graphics.newFont('assets/shared/fonts/VT323-Regular.ttf', 8),
+        ['medium'] = love.graphics.newFont('assets/shared/fonts/VT323-Regular.ttf', 16),
+        ['large']  = love.graphics.newFont('assets/shared/fonts/VT323-Regular.ttf', 32)
     }
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {

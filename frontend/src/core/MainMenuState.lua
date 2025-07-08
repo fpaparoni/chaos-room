@@ -1,9 +1,10 @@
 local Session = require 'src.core.Session'
 
 MainMenuState = Class{__includes = BaseState}
+textColor = {0, 1, 0} 
 
 function MainMenuState:init()
-    self.options = {'Breakout', 'Temp1 (disabled)', 'Temp2 (disabled)'}
+    self.options = {'Breakout', 'Alien shooter', 'Temp2 (disabled)'}
     self.currentSelection = 1
 
     self.phase = 'splash'      -- 'splash', 'input', 'menu'
@@ -75,26 +76,35 @@ function MainMenuState:update(dt)
                 gSounds['music']:setVolume(0.15)
 
                 love.keyboard.keysPressed = {}
+            elseif self.currentSelection == 2 then
+                require 'src.alienshooter.AlienShooterState'
+                gStateMachine = StateMachine {
+                    ['alienshooter'] = function() return AlienShooterState() end
+                }
+                gStateMachine:change('alienshooter')
             end
         end
     end
 end
 
 function MainMenuState:render()
+    love.graphics.setBackgroundColor(0, 0, 0)
+    love.graphics.setColor(textColor)
     if self.phase == 'splash' then
         love.graphics.setFont(gFonts['large'])
-        love.graphics.printf('Welcome to Chaos Room!', 0, VIRTUAL_HEIGHT / 2 - 20, VIRTUAL_WIDTH, 'center')
+        local message = "WELCOME TO CHAOS ROOM"
+        drawTextWithGlow(message)
 
     elseif self.phase == 'input' then
         love.graphics.setFont(gFonts['medium'])
-        love.graphics.printf('Enter ' .. self.currentField .. ':', 0, 100, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('ENTER ' .. self.currentField .. ':', 0, 100, VIRTUAL_WIDTH, 'center')
         love.graphics.setColor(0.6, 1, 0.6, 1)
         love.graphics.printf(self.inputBuffer[self.currentField], 0, 130, VIRTUAL_WIDTH, 'center')
         love.graphics.setColor(1, 1, 1, 1)
 
     elseif self.phase == 'menu' then
         love.graphics.setFont(gFonts['large'])
-        love.graphics.printf('Mini Arcade', 0, 40, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('SHALL WE PLAY A GAME?', 0, 40, VIRTUAL_WIDTH, 'center')
 
         love.graphics.setFont(gFonts['medium'])
 

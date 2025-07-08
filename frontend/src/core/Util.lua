@@ -1,13 +1,5 @@
 --[[
-    GD50
-    Breakout Remake
-
-    -- StartState Class --
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-
-    Helper functions for writing games.
+    Helper functions.
 ]]
 
 --[[
@@ -181,4 +173,48 @@ function GenerateQuadsPowerUps(atlas)
     end
 
     return quads
+end
+
+--[[
+    Draw text with a glow effect
+]]
+function drawTextWithGlow(text, x, y)
+    love.graphics.setColor(0, 1, 0, 0.1)
+    for dx = -2, 2 do
+        for dy = -2, 2 do
+            love.graphics.print(text, x + dx, y + dy)
+        end
+    end
+    love.graphics.setColor(0, 1, 0, 1)
+    love.graphics.print(text, x, y)
+end
+
+
+function drawTextWithGlowLimitWidth(text, y, limitWidth)
+    love.graphics.setColor(0, 1, 0, 0.1)
+    for dx = -2, 2 do
+        for dy = -2, 2 do
+            love.graphics.printf(text, dx, y + dy, limitWidth, "center")
+        end
+    end
+    love.graphics.setColor(0, 1, 0, 1)
+    love.graphics.printf(text, 0, y, limitWidth, "center")
+end
+
+--[[
+    Draw text with a glow effect, position based on the text and VIRTUAL_WIDTH/VIRTUAL_HEIGHT
+]]
+function drawTextWithGlow(text)
+    local font = love.graphics.getFont()
+    local textWidth = font:getWidth(text)
+    local x = (VIRTUAL_WIDTH - textWidth) / 2
+    local y = VIRTUAL_HEIGHT / 2 - 20
+    love.graphics.setColor(0, 1, 0, 0.1)
+    for dx = -2, 2 do
+        for dy = -2, 2 do
+            love.graphics.print(text, x + dx, y + dy)
+        end
+    end
+    love.graphics.setColor(0, 1, 0, 1)
+    love.graphics.print(text, x, y)
 end
