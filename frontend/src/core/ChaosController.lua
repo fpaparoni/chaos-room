@@ -5,7 +5,7 @@ ChaosController = Class{}
 
 function ChaosController:init()
     self.timer = 0
-    self.interval = 5         -- ogni 5 secondi
+    self.interval = 3         -- ogni 5 secondi
     self.pendingBricks = 0    -- quanti brick aggiungere
 end
 
@@ -37,7 +37,7 @@ function ChaosController:update(dt, bricks)
     if self.timer >= self.interval then
         self.timer = self.timer - self.interval
 
-        local externalCount = self:queryExternalBrickCount(bricks)
+        local externalCount = self:queryExternalBrickCount()
 
         -- Conta quanti brick sono attualmente attivi
         local currentActive = 0
@@ -63,7 +63,7 @@ function ChaosController:update(dt, bricks)
     end
 end
 
-function ChaosController:queryExternalBrickCount(bricks)
+function ChaosController:queryExternalBrickCount()
     local response_body = {}
     local url = "http://".. Session.host .. ":" .. Session.port .. "/victims"
     local body, err = http.get(url)

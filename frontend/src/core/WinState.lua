@@ -1,3 +1,4 @@
+require 'src/core/Util'
 
 local Session = require 'src.core.Session'
 
