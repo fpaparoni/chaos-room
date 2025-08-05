@@ -2,6 +2,10 @@
 AlienShooterState = Class{__includes = BaseState}
 
 local Game = require 'src.alienshooter.Game' 
+gSounds = {
+    ['main']       = love.audio.newSource('assets/alienshooter/sounds/main.mp3', 'stream'),
+    ['fire']       = love.audio.newSource('assets/alienshooter/sounds/fire.wav', 'stream'),
+}
 
 function AlienShooterState:enter()
     Game.load()
@@ -14,6 +18,7 @@ function AlienShooterState:update(dt)
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
     elseif love.keyboard.wasPressed('space') then
+        gSounds['fire']:play()
         Game.keypressed('space')
     end
 end

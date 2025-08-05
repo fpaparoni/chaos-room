@@ -82,6 +82,9 @@ function MainMenuState:update(dt)
                     ['alienshooter'] = function() return AlienShooterState() end
                 }
                 gStateMachine:change('alienshooter')
+                gSounds['main']:play()
+                gSounds['main']:setLooping(true)
+                gSounds['main']:setVolume(0.4)
             end
         end
     end
