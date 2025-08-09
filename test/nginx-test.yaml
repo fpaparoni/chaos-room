@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chaos-html
+  namespace: test-chaos-ns
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="refresh" content="1">
+        <title>Chaos Test Pod</title>
+        <style>
+            body { font-family: monospace; text-align: center; margin-top: 10%; background: #111; color: lime; }
+        </style>
+    </head>
+    <body>
+        <h1>Pod Online</h1>
+        <p>This pod is running and reachable.</p>
+    </body>
+    </html>
+binaryData: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chaos-test
+  namespace: test-chaos-ns
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: chaos-test
+  template:
+    metadata:
+      labels:
+        app: chaos-test
+    spec:
+      volumes:
+        - name: custom-html
+          configMap:
+            name: chaos-html
+            defaultMode: 420
+      containers:
+        - name: chaos-web
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - name: custom-html
+              mountPath: /usr/share/nginx/html
+          imagePullPolicy: Always
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chaos-test-service
+  namespace: test-chaos-ns
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30091
+  selector:
+    app: chaos-test
+  type: NodePort
