@@ -9,8 +9,8 @@ require 'src/core/MainMenuState'
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
-VIRTUAL_WIDTH = 432
-VIRTUAL_HEIGHT = 243
+VIRTUAL_WIDTH = 432*2
+VIRTUAL_HEIGHT = 243*2
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -21,7 +21,8 @@ function love.load()
     gFonts = {
         ['small']  = love.graphics.newFont('assets/shared/fonts/VT323-Regular.ttf', 8),
         ['medium'] = love.graphics.newFont('assets/shared/fonts/VT323-Regular.ttf', 16),
-        ['large']  = love.graphics.newFont('assets/shared/fonts/VT323-Regular.ttf', 32)
+        ['large']  = love.graphics.newFont('assets/shared/fonts/VT323-Regular.ttf', 32),
+        ['verylarge']  = love.graphics.newFont('assets/shared/fonts/VT323-Regular.ttf', 64)
     }
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {

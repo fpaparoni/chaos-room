@@ -79,12 +79,13 @@ function MainMenuState:update(dt)
             elseif self.currentSelection == 2 then
                 require 'src.alienshooter.AlienShooterState'
                 gStateMachine = StateMachine {
+                    ['win'] = function() return WinState() end,
                     ['alienshooter'] = function() return AlienShooterState() end
                 }
                 gStateMachine:change('alienshooter')
-                gSounds['main']:play()
-                gSounds['main']:setLooping(true)
-                gSounds['main']:setVolume(0.4)
+                gSounds['music']:play()
+                gSounds['music']:setLooping(true)
+                gSounds['music']:setVolume(0.4)
             end
         end
     end

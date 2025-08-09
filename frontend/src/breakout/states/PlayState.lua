@@ -27,6 +27,19 @@ end
 ]]
 function PlayState:enter(params)
 
+    self.prevVirtualWidth = VIRTUAL_WIDTH
+    self.prevVirtualHeight = VIRTUAL_HEIGHT
+
+    -- Imposta nuovi valori solo per questo gioco
+    VIRTUAL_WIDTH = VIRTUAL_WIDTH
+    VIRTUAL_HEIGHT = VIRTUAL_HEIGHT
+
+    push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
+        fullscreen = false,
+        resizable = false,
+        vsync = true
+    })
+
     --for video
     self.keyCount = 0
     self.multiCount = 0
@@ -50,8 +63,8 @@ function PlayState:enter(params)
     table.insert(self.balls, params.ball)
 
     -- give ball random starting velocity
-    self.balls[1].dx = math.random(-200, 200)
-    self.balls[1].dy = math.random(-50, -60)
+    self.balls[1].dx = 200--math.random(-200, 200)
+    self.balls[1].dy = 60--math.random(-50, -60)
 
     -- Pass it false from the exit function of the start state or paddle select (wherever recoverPoints is set)
     self.hasKey = params.hasKey
@@ -63,6 +76,7 @@ function PlayState:enter(params)
     end
 
     self.debugOn = params.debugOn
+
 end
 
 function PlayState:update(dt)

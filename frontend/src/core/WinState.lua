@@ -1,10 +1,19 @@
 require 'src/core/Util'
-
 local Session = require 'src.core.Session'
 
 WinState = Class{__includes = BaseState}
 
+WIN_VIRTUAL_WIDTH = 432*2
+WIN_VIRTUAL_HEIGHT = 243*2
+WINDOW_WIDTH = 1280
+WINDOW_HEIGHT = 720
+
 function WinState:enter()
+    push:setupScreen(WIN_VIRTUAL_WIDTH, WIN_VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
+        fullscreen = false,
+        resizable = false,
+        vsync = true
+    })
     self.image = love.graphics.newImage('assets/breakout/graphics/victory.png')
     self.music = love.audio.newSource('assets/breakout/sounds/victory.mp3', 'stream')
     self.music:setLooping(true)
@@ -21,5 +30,5 @@ function WinState:render()
     love.graphics.clear(0, 0, 0, 1)
     love.graphics.setFont(gFonts['large'])
     duration = Session.endTime - Session.startTime
-    love.graphics.printf('You won!\nChaos victims: ' .. Session.count .. '\nTime:'.. duration ..' seconds', 0, VIRTUAL_HEIGHT / 2 - 20, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('You won!\nChaos victims: ' .. Session.count .. '\nTime:'.. duration ..' seconds', 0, WIN_VIRTUAL_HEIGHT / 2 - 20, WIN_VIRTUAL_WIDTH, 'center')
 end
