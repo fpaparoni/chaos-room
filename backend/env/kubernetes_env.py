@@ -11,8 +11,34 @@ class KubernetesEnv(BaseEnvClient):
         self.v1 = client.CoreV1Api()
 
     def _get_running_pods(self):
+        #pods = self.v1.list_namespaced_pod(self.namespace)
+        #return [pod for pod in pods.items if pod.status.phase == "Running"]
         pods = self.v1.list_namespaced_pod(self.namespace)
-        return [pod for pod in pods.items if pod.status.phase == "Running"]
+        running_pods = []
+
+        for pod in pods.items:
+            if pod.status.phase != "Running":
+                continue
+
+            # Esclude i pod in fase di terminazione
+            if pod.metadata.deletion_timestamp:
+                continue
+
+            # Verifica che almeno un container sia in stato running e pronto
+            all_ready = True
+            if pod.status.container_statuses:
+                for status in pod.status.container_statuses:
+                    if not (status.ready and status.state.running):
+                        all_ready = False
+                        break
+            else:
+                all_ready = False
+
+            if all_ready:
+                running_pods.append(pod)
+
+        return running_pods
+
 
     def count_running_services(self) -> int:
         return len(self._get_running_pods())
