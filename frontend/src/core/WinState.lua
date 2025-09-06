@@ -3,12 +3,11 @@ local Session = require 'src.core.Session'
 
 WinState = Class{__includes = BaseState}
 
-WIN_VIRTUAL_WIDTH = 432*2
-WIN_VIRTUAL_HEIGHT = 243*2
-WINDOW_WIDTH = 1280
-WINDOW_HEIGHT = 720
-
 function WinState:enter()
+    WIN_VIRTUAL_WIDTH = 432*2
+    WIN_VIRTUAL_HEIGHT = 243*2
+    WINDOW_WIDTH = 1280
+    WINDOW_HEIGHT = 720
     push:setupScreen(WIN_VIRTUAL_WIDTH, WIN_VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         resizable = false,
