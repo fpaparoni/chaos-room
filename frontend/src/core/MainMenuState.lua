@@ -2,6 +2,7 @@ local Session = require 'src.core.Session'
 
 MainMenuState = Class{__includes = BaseState}
 textColor = {0, 1, 0} 
+logoImage = love.graphics.newImage("assets/logo.png")
 
 function MainMenuState:init()
     self.options = {'Breakout', 'Alien shooter', 'Temp2 (disabled)'}
@@ -95,12 +96,16 @@ function MainMenuState:render()
     love.graphics.setBackgroundColor(0, 0, 0)
     love.graphics.setColor(textColor)
     if self.phase == 'splash' then
-        love.graphics.setFont(gFonts['large'])
-        local message = "WELCOME TO CHAOS ROOM"
-        drawTextWithGlow(message)
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.draw(
+            logoImage,
+            (VIRTUAL_WIDTH - logoImage:getWidth()) / 2,
+            (VIRTUAL_HEIGHT - logoImage:getHeight()) / 2
+        )
 
     elseif self.phase == 'input' then
-        love.graphics.setFont(gFonts['medium'])
+        love.graphics.setColor(textColor)
+        love.graphics.setFont(gFonts['large'])
         love.graphics.printf('ENTER ' .. self.currentField .. ':', 0, 100, VIRTUAL_WIDTH, 'center')
         love.graphics.setColor(0.6, 1, 0.6, 1)
         love.graphics.printf(self.inputBuffer[self.currentField], 0, 130, VIRTUAL_WIDTH, 'center')
@@ -110,7 +115,7 @@ function MainMenuState:render()
         love.graphics.setFont(gFonts['large'])
         love.graphics.printf('SHALL WE PLAY A GAME?', 0, 40, VIRTUAL_WIDTH, 'center')
 
-        love.graphics.setFont(gFonts['medium'])
+        love.graphics.setFont(gFonts['large'])
 
         for i, option in ipairs(self.options) do
             local y = 100 + i * 20
