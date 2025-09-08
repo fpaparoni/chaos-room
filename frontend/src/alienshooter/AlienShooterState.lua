@@ -18,19 +18,20 @@ PLAYER_SCALAR = 0.8
 player = {
     x = 50, 
     y = screenHeight / 2,
-    speed = 200
+    speed = 230
 }
 
 -- Bullets settings
 bullets = {}
-bulletSpeed = 300 
+bulletSpeed = 200 
 bulletWidth = 4
 bulletHeight = 2
 
 -- Enemies settings
 enemies = {}
-enemySpeed = 120 
-spawnTimer = 1.5
+enemySpeed = 150 
+defaultSpanTimer = 1.0
+spawnTimer = defaultSpanTimer
 
 victimEndpointTimer = 0
 victimEndpointInterval = 1
@@ -129,7 +130,7 @@ function AlienShooterState:update(dt)
             width = enemyBaseWidth * ENEMY_SCALAR,
             height = enemyBaseHeight * ENEMY_SCALAR
         })
-        spawnTimer = 1.5 -- Reset spawn timer
+        spawnTimer = defaultSpanTimer-- Reset spawn timer
     end
 
     for i = #bullets, 1, -1 do
