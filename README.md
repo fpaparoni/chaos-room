@@ -1,7 +1,7 @@
 # Chaos Room
 To be defined...
 
-![Chaos Room Splash](assets/screen.png)
+![Chaos Room Splash](assets/screen.jpg)
 
 
 
