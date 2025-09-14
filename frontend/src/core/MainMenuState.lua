@@ -1,11 +1,10 @@
 local Session = require 'src.core.Session'
-
 MainMenuState = Class{__includes = BaseState}
 textColor = {0, 1, 0} 
 logoImage = love.graphics.newImage("assets/logo.png")
 
 function MainMenuState:init()
-    self.options = {'Breakout', 'Alien shooter', 'Temp2 (disabled)'}
+    self.options = {'Breakout', 'Alien shooter', 'Zombie shooter'}
     self.currentSelection = 1
 
     self.phase = 'splash'      -- 'splash', 'input', 'menu'
@@ -87,6 +86,13 @@ function MainMenuState:update(dt)
                 gSounds['music']:play()
                 gSounds['music']:setLooping(true)
                 gSounds['music']:setVolume(0.4)
+            elseif self.currentSelection == 3 then
+                require 'src.zombieshooter.TopDownState'
+                gStateMachine = StateMachine {
+                    ['menu'] = function() return MainMenuState() end,
+                    ['zombieshooter'] = function() return TopDownState() end
+                }
+                gStateMachine:change('zombieshooter')
             end
         end
     end

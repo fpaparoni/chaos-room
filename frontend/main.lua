@@ -58,6 +58,10 @@ function love.update(dt)
     love.keyboard.keysPressed = {}
 end
 
+function love.mousepressed(x, y, btnCode, isTouch)
+    gStateMachine:mousepressed(x, y, btnCode, isTouch)
+end
+
 function love.draw()
     push:start()
     gStateMachine:render()
