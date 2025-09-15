@@ -13,8 +13,8 @@ function WinState:enter()
         resizable = false,
         vsync = true
     })
-    self.image = love.graphics.newImage('assets/breakout/graphics/victory.png')
-    self.music = love.audio.newSource('assets/breakout/sounds/victory.mp3', 'stream')
+    self.image = love.graphics.newImage('assets/shared/graphics/victory.png')
+    self.music = love.audio.newSource('assets/shared/sounds/victory.mp3', 'stream')
     self.music:setLooping(true)
     self.music:play()
 end
@@ -29,5 +29,12 @@ function WinState:render()
     love.graphics.clear(0, 0, 0, 1)
     love.graphics.setFont(gFonts['large'])
     duration = Session.endTime - Session.startTime
-    love.graphics.printf('You won!\nChaos victims: ' .. Session.count .. '\nTime:'.. duration ..' seconds', 0, WIN_VIRTUAL_HEIGHT / 2 - 20, WIN_VIRTUAL_WIDTH, 'center')
+
+    local imgWidth = self.image:getWidth()
+    local imgHeight = self.image:getHeight()
+    local imgX = (WIN_VIRTUAL_WIDTH - imgWidth) / 2
+    local imgY = (WIN_VIRTUAL_HEIGHT / 4 - imgHeight / 2)+30
+    love.graphics.draw(self.image, imgX, imgY)
+
+    love.graphics.printf('You won!\nChaos victims: ' .. Session.count .. '\nTime:'.. duration ..' seconds\n\nPress enter to exit', 0, (WIN_VIRTUAL_HEIGHT / 2)+40, WIN_VIRTUAL_WIDTH, 'center')
 end

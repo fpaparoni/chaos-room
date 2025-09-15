@@ -1,7 +1,6 @@
 -- AlienShooterState.lua
 AlienShooterState = Class{__includes = BaseState}
 require 'src/core/ChaosController'
-require 'src/core/WinState'
 
 gSounds = {
     ['music']       = love.audio.newSource('assets/alienshooter/sounds/main.mp3', 'stream'),
@@ -34,7 +33,7 @@ defaultSpanTimer = 1.0
 spawnTimer = defaultSpanTimer
 
 victimEndpointTimer = 0
-victimEndpointInterval = 1
+victimEndpointInterval = 2
 backendVictims = chaos:queryExternalBrickCount()
 Session.startTime=os.time()
 

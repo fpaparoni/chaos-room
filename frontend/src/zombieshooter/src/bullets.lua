@@ -7,6 +7,10 @@ local G = love.graphics
 
 local bullets = {}
 
+gSounds = {
+  ['fire']       = love.audio.newSource('assets/alienshooter/sounds/fire.wav', 'stream'),
+}
+
 function bullets:new()
   return Bullet(speed, player)
 end
@@ -26,6 +30,7 @@ function bullets:draw()
 end
 
 function bullets:spawn(speed, player)
+  gSounds['fire']:play()
   table.insert(self, self:new(speed, player))
 end
 

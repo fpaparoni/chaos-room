@@ -12,16 +12,32 @@ zombies = {
   spawnCountdown = spawnInterval
 }
 
-function zombies:update(dt)
+function zombies:update(activePods,dt)
   self:decreaseSpawnCountdown(dt)
-  if self.spawnCountdown <= 0 then self:spawn() end
 
-  for _i, zombie in ipairs(self) do
-    zombie:move(dt)
-    collisions:betweenZombieAndPlayer(zombie)
+  -- conta solo gli zombie vivi in self
+  local currentZombies = 0
+  for _, zombie in ipairs(self) do
+    if zombie.isAlive then
+      currentZombies = currentZombies + 1
+    end
   end
 
-  zombies:removeDead()
+  -- spawn solo se ci sono meno zombie dei pod attivi
+  if currentZombies < activePods and self.spawnCountdown <= 0 then
+    self:spawn()
+    self.spawnCountdown = self.spawnInterval
+  end
+
+  -- aggiorna i movimenti
+  for _, zombie in ipairs(self) do
+    if zombie.isAlive then
+      zombie:move(dt)
+      collisions:betweenZombieAndPlayer(zombie)
+    end
+  end
+
+  self:removeDead()
 end
 
 function zombies:draw()

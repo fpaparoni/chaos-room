@@ -199,6 +199,7 @@ function drawTextWithGlowLimitWidth(text, y, limitWidth)
     end
     love.graphics.setColor(0, 1, 0, 1)
     love.graphics.printf(text, 0, y, limitWidth, "center")
+    love.graphics.setColor(1,1,1)
 end
 
 --[[

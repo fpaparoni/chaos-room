@@ -43,7 +43,19 @@ function player:resetPosition()
 end
 
 function player:getDirection()
-  return math.atan2(player.y - M.getY(), player.x - M.getX()) + math.rad(180)
+  local joysticks = love.joystick.getJoysticks()
+  local joystick = joysticks[1]
+
+  if joystick then
+    local lx = joystick:getAxis(3) -- right stick X
+    local ly = joystick:getAxis(4) -- right stick Y
+    if math.abs(lx) > 0.2 or math.abs(ly) > 0.2 then
+      return math.atan2(ly, lx)
+    end
+  end
+
+  -- fallback: mouse
+  return math.atan2(self.y - love.mouse.getY(), self.x - love.mouse.getX()) + math.rad(180)
 end
 
 function player:move(dt)

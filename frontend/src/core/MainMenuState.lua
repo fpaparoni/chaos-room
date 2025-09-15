@@ -1,3 +1,4 @@
+require 'src/core/WinState'
 local Session = require 'src.core.Session'
 MainMenuState = Class{__includes = BaseState}
 textColor = {0, 1, 0} 
@@ -89,10 +90,13 @@ function MainMenuState:update(dt)
             elseif self.currentSelection == 3 then
                 require 'src.zombieshooter.TopDownState'
                 gStateMachine = StateMachine {
-                    ['menu'] = function() return MainMenuState() end,
+                    ['win'] = function() return WinState() end,
                     ['zombieshooter'] = function() return TopDownState() end
                 }
                 gStateMachine:change('zombieshooter')
+                gSounds['music']:play()
+                gSounds['music']:setLooping(true)
+                gSounds['music']:setVolume(0.4)
             end
         end
     end
