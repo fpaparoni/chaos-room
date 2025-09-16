@@ -34,7 +34,7 @@ gFonts = {
 -- Graphics (game-specific)
 -- load up the graphics we'll be using throughout our states
 gTextures = {
-    ['background'] = love.graphics.newImage('assets/breakout/graphics/background3.png'),
+    ['background'] = love.graphics.newImage('assets/breakout/graphics/background.png'),
     ['main'] = love.graphics.newImage('assets/breakout/graphics/breakout.png'),
     ['arrows'] = love.graphics.newImage('assets/breakout/graphics/arrows.png'),
     ['hearts'] = love.graphics.newImage('assets/breakout/graphics/hearts.png'),
