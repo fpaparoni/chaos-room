@@ -1,13 +1,14 @@
-env: kubernetes
+env: aws
 
 kubernetes:
   config_path: ~/.kube/config
   namespace: test-chaos-ns
 
 aws:
-  region: us-west-2
-  service: ecs
-  cluster: my-cluster
+  region: us-east-1
+  tag_key: chaosroom
+  tag_value: "true"
+  states: ["running"]
 
 azure:
   subscription_id: xxx
