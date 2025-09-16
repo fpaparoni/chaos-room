@@ -1,4 +1,4 @@
-env: aws
+env: kubernetes
 
 kubernetes:
   config_path: ~/.kube/config
@@ -11,5 +11,8 @@ aws:
   states: ["running"]
 
 azure:
-  subscription_id: xxx
-  resource_group: xxx
+  subscription_id: "xxx"
+  resource_group: "RG"
+  tag_key: "chaosroom"
+  tag_value: "true"
+  states: ["running"]

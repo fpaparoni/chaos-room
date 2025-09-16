@@ -1,18 +1,44 @@
 import random
-from .base import BaseEnvClient
+from azure.identity import DefaultAzureCredential
+from azure.mgmt.compute import ComputeManagementClient
 
-class AzureEnv(BaseEnvClient):
+class AzureEnv:
     def __init__(self, config_data: dict):
-        self.running_services = ["az-svc-1", "az-svc-2", "az-svc-3"]
+        self.subscription_id = config_data.get("subscription_id")
+        self.resource_group = config_data.get("resource_group")
+        self.tag_key = config_data.get("tag_key")
+        self.tag_value = config_data.get("tag_value")
+        self.states = config_data.get("states", ["running"])
+
+        self.client = ComputeManagementClient(
+            credential=DefaultAzureCredential(),
+            subscription_id=self.subscription_id
+        )
+
+    def _get_running_vms(self):
+        vms = []
+        for vm in self.client.virtual_machines.list(self.resource_group):
+            if not vm.tags or vm.tags.get(self.tag_key) != self.tag_value:
+                continue
+
+            instance_view = self.client.virtual_machines.instance_view(
+                self.resource_group, vm.name
+            )
+            statuses = instance_view.statuses or []
+            power_state = next(
+                (s.code for s in statuses if s.code.startswith("PowerState")), None
+            )
+            if power_state and any(st in power_state for st in self.states):
+                vms.append(vm.name)
+        return vms
 
     def count_running_services(self) -> int:
-        return len(self.running_services)
+        return len(self._get_running_vms())
 
     def kill_random_service(self) -> bool:
-        if not self.running_services:
+        vms = self._get_running_vms()
+        if not vms:
             return False
-
-        victim = random.choice(self.running_services)
-        print(f"[MOCK] Azure would terminate: {victim}")
-        self.running_services.remove(victim)
+        victim = random.choice(vms)
+        self.client.virtual_machines.begin_delete(self.resource_group, victim)
         return True
