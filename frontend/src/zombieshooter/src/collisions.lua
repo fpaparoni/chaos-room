@@ -25,7 +25,7 @@ function collisions:betweenZombiesAndBullets()
         zombie.isAlive = false
         bullet.isAlive = false
         game:increaseScoreBy(1)
-        ChaosController:removeBrick()
+        ChaosController:removePod()
       end
     end
   end

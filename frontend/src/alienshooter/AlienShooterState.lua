@@ -34,7 +34,7 @@ spawnTimer = defaultSpanTimer
 
 victimEndpointTimer = 0
 victimEndpointInterval = 2
-backendVictims = chaos:queryExternalBrickCount()
+backendVictims = chaos:countPod()
 Session.startTime=os.time()
 
 -- Assets
@@ -64,7 +64,7 @@ end
 function AlienShooterState:update(dt)
     victimEndpointTimer = victimEndpointTimer + dt
     if victimEndpointTimer >= victimEndpointInterval then
-        local newVictimCount = chaos:queryExternalBrickCount() or 0
+        local newVictimCount = chaos:countPod() or 0
         if newVictimCount > #enemies then
             local diff = newVictimCount - #enemies
             for i = 1, diff do
@@ -143,7 +143,7 @@ function AlienShooterState:update(dt)
                bullet.y + bullet.height > enemy.y then
                 table.remove(bullets, i)
                 table.remove(enemies, j)
-                chaos:removeBrick()
+                chaos:removePod()
                 goto next_bullet
             end
         end

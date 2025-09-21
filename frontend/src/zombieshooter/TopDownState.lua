@@ -39,7 +39,7 @@ function TopDownState:update(dt)
     elseif game:isPlaying() then
       podUpdateTimer = podUpdateTimer + dt
       if podUpdateTimer >= podUpdateInterval then
-          activeEnemy = chaos:queryExternalBrickCount() or 0
+          activeEnemy = chaos:countPod() or 0
           podUpdateTimer = 0
       end
 

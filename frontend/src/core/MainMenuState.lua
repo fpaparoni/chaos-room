@@ -64,7 +64,7 @@ function MainMenuState:update(dt)
 
                 gStateMachine:change('play', {
                     paddle = paddle,
-                    bricks = LevelMaker.createMap(1,chaos:queryExternalBrickCount()),
+                    bricks = LevelMaker.createMap(1,chaos:countPod()),
                     health = 3,
                     score = 0,
                     ball = ball,
