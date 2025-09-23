@@ -50,6 +50,7 @@ Below is the configuration required to start the ChaosRoom server. This involves
 ```yaml
 # config.yaml in backend
 env: kubernetes  # or "aws", or "azure"
+port: 8181
 
 kubernetes:
   config_path: ~/.kube/config #path to the kube config
