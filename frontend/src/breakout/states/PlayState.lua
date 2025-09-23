@@ -514,7 +514,7 @@ function PlayState:render()
         end
     end
 
-    renderScore(self.score)
+    renderScore()
     renderHealth(self.health)
 
     -- pause text, if paused

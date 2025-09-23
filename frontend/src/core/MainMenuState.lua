@@ -5,7 +5,7 @@ textColor = {0, 1, 0}
 logoImage = love.graphics.newImage("assets/logo.png")
 
 function MainMenuState:init()
-    self.options = {'Breakout', 'Alien shooter', 'Zombie shooter'}
+    self.options = {'Alien shooter (easy)', 'Breakout (medium)', 'Zombie shooter (hard)'}
     self.currentSelection = 1
 
     self.phase = 'splash'      -- 'splash', 'input', 'menu'
@@ -53,6 +53,16 @@ function MainMenuState:update(dt)
             self.currentSelection = self.currentSelection == #self.options and 1 or self.currentSelection + 1
         elseif love.keyboard.wasPressed('return') or love.keyboard.wasPressed('enter') then
             if self.currentSelection == 1 then
+                require 'src.alienshooter.AlienShooterState'
+                gStateMachine = StateMachine {
+                    ['win'] = function() return WinState() end,
+                    ['alienshooter'] = function() return AlienShooterState() end
+                }
+                gStateMachine:change('alienshooter')
+                gSounds['music']:play()
+                gSounds['music']:setLooping(true)
+                gSounds['music']:setVolume(0.4)
+            elseif self.currentSelection == 2 then
                 require 'src.breakout.Dependencies'
 
                 local ball = Ball()
@@ -77,16 +87,6 @@ function MainMenuState:update(dt)
                 gSounds['music']:setVolume(0.15)
 
                 love.keyboard.keysPressed = {}
-            elseif self.currentSelection == 2 then
-                require 'src.alienshooter.AlienShooterState'
-                gStateMachine = StateMachine {
-                    ['win'] = function() return WinState() end,
-                    ['alienshooter'] = function() return AlienShooterState() end
-                }
-                gStateMachine:change('alienshooter')
-                gSounds['music']:play()
-                gSounds['music']:setLooping(true)
-                gSounds['music']:setVolume(0.4)
             elseif self.currentSelection == 3 then
                 require 'src.zombieshooter.TopDownState'
                 gStateMachine = StateMachine {

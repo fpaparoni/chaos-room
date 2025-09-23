@@ -85,7 +85,7 @@ function ServeState:render()
         brick:render()
     end
 
-    renderScore(self.score)
+    renderScore()
     renderHealth(self.health)
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.setFont(gFonts['large'])

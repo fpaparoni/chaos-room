@@ -13,6 +13,7 @@ function WinState:enter()
         resizable = false,
         vsync = true
     })
+    gFonts['large'] = love.graphics.newFont('assets/shared/fonts/VT323-Regular.ttf', 32 * 1.5)
     self.image = love.graphics.newImage('assets/shared/graphics/victory.png')
     self.music = love.audio.newSource('assets/shared/sounds/victory.mp3', 'stream')
     self.music:setLooping(true)
@@ -27,6 +28,7 @@ end
 
 function WinState:render()
     love.graphics.clear(0, 0, 0, 1)
+    
     love.graphics.setFont(gFonts['large'])
     duration = Session.endTime - Session.startTime
 

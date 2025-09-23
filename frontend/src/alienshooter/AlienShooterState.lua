@@ -8,6 +8,7 @@ gSounds = {
 }
 
 chaos = ChaosController()
+
 Session = require 'src.core.Session'
 screenWidth = VIRTUAL_WIDTH
 screenHeight = VIRTUAL_HEIGHT

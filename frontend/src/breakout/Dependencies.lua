@@ -69,7 +69,7 @@ gSounds = {
     ['powerup']     = love.audio.newSource('assets/breakout/sounds/powerup.wav', 'static'),
     ['music']       = love.audio.newSource('assets/breakout/sounds/music.wav', 'stream')
 }
-
+Session = require 'src.core.Session'
 chaos = ChaosController()
 
 playState = PlayState()
@@ -167,10 +167,10 @@ end
     Simply renders the player's score at the top right, with left-side padding
     for the score number.
 ]]
-function renderScore(score)
+function renderScore()
     love.graphics.setFont(gFonts['small'])
     love.graphics.print('Score:', VIRTUAL_WIDTH - 60, 5)
-    love.graphics.printf(tostring(score), VIRTUAL_WIDTH - 50, 5, 40, 'right')
+    love.graphics.printf(Session.count, VIRTUAL_WIDTH - 50, 5, 40, 'right')
 end
 
 function love.draw()
