@@ -7,6 +7,8 @@ import uvicorn
 with open("config.yaml", "r") as f:
     config = yaml.safe_load(f)
 
+# Read port or use default port 8181
+port = config.get("port", 8181)
 # Create FastAPI app
 app = FastAPI()
 
@@ -27,4 +29,4 @@ def kill_random():
 
 # Optional for running with `python main.py`
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8181, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
