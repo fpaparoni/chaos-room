@@ -28,7 +28,7 @@ You can test different environments: **Kubernetes**, **AWS**, or **Azure**. Choo
 
 |  Environment| Configuration Required | 
 |--|--|
-| **Kubernetes** | In your Kubernetes cluster, under a specific namespace, there will be deployments that will be put under stress. The deployment selected for stress testing will have a certain number of replicas, which ChaosRoom will attempt to scale down to zero. The machine used to start the ChaosRoom server must have **kubectl** installed and properly configured.|
+| **Kubernetes** | In your Kubernetes cluster, under a specific namespace, there will be deployments that will be put under stress. The deployment selected for stress testing will have a certain number of replicas, which ChaosRoom will attempt to scale down to zero. The machine used to start the ChaosRoom server must have **kubectl** installed and properly configured, with a specific kube config available on the system.|
 | **AWS** | Within an AWS subscription, you will need to configure an Auto Scaling Group with the EC2 instances of your service. These instances must have a specific tag that will be used to identify which machines are part of the test. ChaosRoom will trigger the termination of the tagged EC2 instances, monitoring the system’s scaling speed. The machine used to start the ChaosRoom server must have the **AWS CLI** installed and already configured for your subscription.|
 | **Azure** | Within an Azure subscription, you will need to configure an Azure Virtual Machine Scale Set (VMSS) with the VMs of your service. These VMs must also have a specific tag that will be used to identify which machines are part of the test. ChaosRoom will trigger the termination of the tagged VMs, monitoring the system’s scaling speed. The machine used to start the ChaosRoom server must have the **Azure CLI** installed and authenticated against your subscription.|
 
@@ -39,8 +39,8 @@ Below is the configuration required to start the ChaosRoom server. This involves
 env: kubernetes  # or "aws", or "azure"
 
 kubernetes:
-  config_path: ~/.kube/config
-  namespace: test-chaos-ns
+  config_path: ~/.kube/config #path to the kube config
+  namespace: test-chaos-ns    
 
 aws:
   region: us-east-1
