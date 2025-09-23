@@ -2,8 +2,7 @@
 
 ![Chaos Room Splash](assets/screen.jpg)
 
-**ChaosRoom** is a chaos engineering platform designed to stress test your infrastructure in controlled scenarios.  
-Its goal is to help you understand how your systems behave under failure conditions, measure their resilience, and improve recovery strategies.  
+**ChaosRoom** is a chaos engineering platform designed to stress test your infrastructure in controlled scenarios. Its goal is to help you understand how your systems behave under failure conditions, measure their resilience, and improve recovery strategies.  
 
 ChaosRoom integrates with environments based on **Kubernetes**, **AWS**, and **Azure** to simulate pod crashes, VM terminations, or scaling challenges.  By combining a backend service, a configuration layer, and a playful frontend interface, ChaosRoom turns stress testing into a fun experience…and it also gives you a great excuse to occasionally be seen playing in front of your computer!  
 
@@ -25,7 +24,7 @@ TBD
 
 ## Server setup
 
-You can test different environments: Kubernetes, AWS EC2, or Azure. Choose and configure based on your setup. ChaosRoom backend will call your test server environment based on specific configuration
+You can test different environments: **Kubernetes**, **AWS**, or **Azure**. Choose and configure based on your setup. ChaosRoom backend will call your test server environment based on specific configuration
 
 |  Environment| Configuration Required | 
 |--|--|
@@ -40,21 +39,21 @@ Below is the configuration required to start the ChaosRoom server. This involves
 env: kubernetes  # or "aws", or "azure"
 
 kubernetes:
-	config_path: ~/.kube/config
-	namespace: test-chaos-ns
+  config_path: ~/.kube/config
+  namespace: test-chaos-ns
 
 aws:
-	region: us-east-1
-	tag_key: chaosroom
-	tag_value: "true"
-	states: ["running"]
+  region: us-east-1
+  tag_key: chaosroom
+  tag_value: "true"
+  states: ["running"]
   
 azure:
-	subscription_id: "xxx"
-	resource_group: "RG"
-	tag_key: "chaosroom"
-	tag_value: "true"
-	states: ["running"]
+  subscription_id: "xxx"
+  resource_group: "RG"
+  tag_key: "chaosroom"
+  tag_value: "true"
+  states: ["running"]
 ```
 
 Next, you will need to start the server using the Python interpreter available on your system:
@@ -113,16 +112,13 @@ Each configuration results in different pod availability times, allowing you to 
 
   Once you have your remote test environment and the ChaosRoom backend (server) running, you can start the client (game) by providing the host and port of the server.  
 
-To run the client, you need to have [LOVE2D](https://github.com/love2d/love) installed on your system.  
-Then, launch the game with the following command:
+To run the client, you need to have [LOVE2D](https://github.com/love2d/love) installed on your system. Then, launch the game with the following command:
 
 ```bash
 love frontend/
 ```
 
-When the game starts, you will first be prompted to enter the IP address of your backend. Use 127.0.0.1 if you are running the client on the same machine as the server.
-
-Next, you will be asked for the port number. By default, this is 8181, unless you have changed the server configuration.
+When the game starts, you will first be prompted to enter the IP address of your backend. Use 127.0.0.1 if you are running the client on the same machine as the server.Next, you will be asked for the port number. By default, this is 8181, unless you have changed the server configuration.
 
 After that, you simply choose how you want to make your test environment “suffer.” 🙂
 
@@ -142,6 +138,8 @@ This will generate a file named chaos-room.love in the parent directory.
 
 The resulting file can be run using the [LÖVE](https://github.com/love2d/love) interpreter installed on your computer.
 Alternatively, you can also use [RetroPie](https://retropie.org.uk/docs/Love/) to launch it on a gaming machine — just like in the screenshot below 🤓.
+
+![Chaos Room Screenshot](assets/screenshot.png)
 
 ## Credits
 
