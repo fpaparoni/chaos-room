@@ -20,7 +20,20 @@ So, when someone sees you “playing,” you can honestly say: *“I’m perform
 
 ## Architecture
 
-TBD
+The **client** can run either on a standard PC or on an arcade machine — the only requirement is the presence of a **LÖVE emulator**. This is necessary because the frontend component is written in LÖVE and contains the logic for three mini-games: **Alien Shooter**, **Breakout**, and **Zombie Shooter**.
+
+The frontend communicates asynchronously with a **Python backend** through HTTP calls. These requests are used to:
+
++ Check how many pods (or virtual machines) are currently running.
++ Randomly terminate one of them.
+
+When started, the backend exposes these two HTTP services on a configurable port. Based on its configuration, it connects to a test environment that can be deployed on **Kubernetes**, **AWS**, or **Azure**. Depending on the selected environment, the backend uses the corresponding clients (e.g., **kubectl**, **AWS CLI**, **Azure CLI**) to retrieve system information and execute operations.
+
+The **game objective** is tied directly to the test environment:
+
++ The player “wins” when the system under test fails to scale quickly enough, resulting in **zero pods (or VMs) left running**.
+
+![Chaos Room Architecture](assets/architecture.svg)
 
 ## Server setup
 
