@@ -13,13 +13,14 @@ class AwsEnv(BaseEnvClient):
       - state (optional) values like "running, pending" (defaults to running)
     """
 
-    def __init__(self, config_data: dict):
+    def __init__(self, service:str, config_data: dict):
         self.region = config_data.get("region")
         self.tag_key = config_data.get("tag_key")
         self.tag_value = config_data.get("tag_value")
         self.states = config_data.get("states", ["running"])
         # create boto3 client (uses default credentials chain / profile)
         self.client = boto3.client("ec2", region_name=self.region)
+        self.service = service
 
     def _instance_filter(self):
         """

@@ -8,10 +8,10 @@ def get_env_client(config: dict):
     env_type = config["env"]
     
     if env_type == "kubernetes":
-        return KubernetesEnv(config["kubernetes"])
+        return KubernetesEnv(config.get("service"),config["kubernetes"])
     elif env_type == "aws":
-        return AwsEnv(config["aws"])
+        return AwsEnv(config.get("service"),config["aws"])
     elif env_type == "azure":
-        return AzureEnv(config["azure"])
+        return AzureEnv(config.get("service"),config["azure"])
     else:
         raise ValueError(f"Unsupported env type: {env_type}")

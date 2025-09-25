@@ -3,13 +3,13 @@ from azure.identity import DefaultAzureCredential
 from azure.mgmt.compute import ComputeManagementClient
 
 class AzureEnv:
-    def __init__(self, config_data: dict):
+    def __init__(self, service:str, config_data: dict):
         self.subscription_id = config_data.get("subscription_id")
         self.resource_group = config_data.get("resource_group")
         self.tag_key = config_data.get("tag_key")
         self.tag_value = config_data.get("tag_value")
         self.states = config_data.get("states", ["running"])
-
+        self.service = service
         self.client = ComputeManagementClient(
             credential=DefaultAzureCredential(),
             subscription_id=self.subscription_id

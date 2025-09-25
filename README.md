@@ -52,6 +52,9 @@ Below is the configuration required to start the ChaosRoom server. This involves
 env: kubernetes  # or "aws", or "azure"
 port: 8181
 
+#optional setting to enable service check
+#service: http://your-service-endpoint:123
+
 kubernetes:
   config_path: ~/.kube/config #path to the kube config
   namespace: test-chaos-ns    
@@ -75,7 +78,15 @@ Next, you will need to start the server using the Python interpreter available o
 ```bash
 python server/main.py
 ```
- 
+
+If the **`service`** parameter is enabled in the configuration file, you can specify an HTTP service URL that represents the exposed endpoint of your pods. This allows ChaosRoom to check whether the service remains **reachable and functional** when the endpoint is called, even in scenarios where multiple pods (e.g., 2–3 replicas) are running behind it.
+
+The parameter is **optional**:
+
+- If the `service` is provided → ChaosRoom will perform both checks:
+  1. The number of running pods.
+  2. Whether the service endpoint itself is still responsive (HTTP 200).
+- If the `service` is not provided → ChaosRoom will only verify the actual pod count and their ability to scale up/down, without testing service availability.
   
 
 ## Kubernetes quick test

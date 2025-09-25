@@ -1,5 +1,6 @@
 env: kubernetes
-port: 8181
+port: 8181 
+#service: http://192.168.49.2:30091 
 
 kubernetes:
   config_path: ~/.kube/config
