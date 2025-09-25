@@ -35,6 +35,18 @@ The **game objective** is tied directly to the test environment:
 
 ![Chaos Room Architecture](assets/architecture.svg)
 
+## Project structure
+
+```
+chaos-room/
+├── assets/       # Graphic and media resources
+├── backend/      # Server logic (Python) and integration with Kubernetes/AWS/Azure
+├── frontend/     # LÖVE-based frontend with the three mini-games
+├── test/         # Scripts or files to test functionality
+├── LICENSE       # Project license
+└── README.md     # Documentation and project overview
+```
+
 ## Server setup
 
 You can test different environments: **Kubernetes**, **AWS**, or **Azure**. Choose and configure based on your setup. ChaosRoom backend will call your test server environment based on specific configuration
@@ -149,7 +161,7 @@ After that, you simply choose how you want to make your test environment “suff
 
 To exit the game at any time, just press ESC.
 
-  
+[Watch the ChaosRoom tutorial](https://vimeo.com/1122008380)
 
 ## Creating the LÖVE Executable
 
