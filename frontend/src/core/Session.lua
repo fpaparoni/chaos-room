@@ -16,7 +16,7 @@ function Session:reset()
     self.endTime=0
 end
 
--- Utility (opzionale): stampa stato attuale
+-- debug utility
 function Session:debug()
     print('--- Session State ---')
     for k, v in pairs(self) do

@@ -44,19 +44,19 @@ end
 function PlayState:addBricks(bricks)
     local added = 0
 
-    -- Costruisci una mappa delle posizioni occupate attualmente
+    -- build a map of the currently occupied positions
     local occupied = {}
     for _, brick in ipairs(bricks) do
         if brick.inPlay then
             occupied[brick.x] = occupied[brick.x] or {}
             occupied[brick.x][brick.y] = true
-            print(string.format("Brick inPlay at x=%d y=%d", brick.x, brick.y))
+            print(string.format("[PlayState] Brick inPlay at x=%d y=%d", brick.x, brick.y))
         else
-            print(string.format("Brick free at x=%d y=%d", brick.x, brick.y))
+            print(string.format("[PlayState] Brick free at x=%d y=%d", brick.x, brick.y))
         end
     end
 
-    -- Scorri la mappa iniziale e aggiungi mattoni nelle posizioni mancanti
+    -- go through the initial map and fill in the missing positions with bricks
     for _, pos in ipairs(self.initialLayout) do
         if not (occupied[pos.x] and occupied[pos.x][pos.y]) then
             local brick = Brick()
@@ -67,7 +67,7 @@ function PlayState:addBricks(bricks)
             brick.inPlay = true
             table.insert(bricks, brick)
 
-            print(string.format("Brick re-added at x=%d y=%d", pos.x, pos.y))
+            print(string.format("[PlayState] Brick re-added at x=%d y=%d", pos.x, pos.y))
             added = added + 1
 
             if added == self.pendingBricks then
@@ -87,7 +87,7 @@ function PlayState:updateBricks(dt, bricks)
 
         local externalCount = chaos:countPod()
 
-        -- Conta quanti brick sono attualmente attivi
+        -- count active bricks
         local currentActive = 0
         for _, brick in ipairs(bricks) do
             if brick.inPlay then
@@ -98,14 +98,14 @@ function PlayState:updateBricks(dt, bricks)
         local delta = externalCount - currentActive
         if delta > 0 then
             self.pendingBricks = delta
-            print("[CHAOS] External wants " .. externalCount .. " bricks. Adding " .. delta)
+            print("[PlayState] External wants " .. externalCount .. " bricks. Adding " .. delta)
         elseif delta < 0 then
-            print("[CHAOS] External wants " .. externalCount .. " bricks. Removing " .. math.abs(delta))
+            print("[PlayState] External wants " .. externalCount .. " bricks. Removing " .. math.abs(delta))
             self:removeBricks(math.abs(delta), bricks)
         end
     end
 
-    -- Aggiunge i brick nei buchi disponibili
+    -- add required bricks
     if self.pendingBricks > 0 then
         self:addBricks(bricks)
     end
@@ -133,15 +133,14 @@ end
 function PlayState:enter(params)
 
     self.timer = 0
-    self.interval = 3         -- ogni 5 secondi
-    self.pendingBricks = 0    -- quanti brick aggiungere
+    self.interval = 3         -- update interval
+    self.pendingBricks = 0    
 
     self.prevVirtualWidth = VIRTUAL_WIDTH
     self.prevVirtualHeight = VIRTUAL_HEIGHT
 
-    -- Imposta nuovi valori solo per questo gioco
-    VIRTUAL_WIDTH = VIRTUAL_WIDTH
-    VIRTUAL_HEIGHT = VIRTUAL_HEIGHT
+    --VIRTUAL_WIDTH = VIRTUAL_WIDTH
+    --VIRTUAL_HEIGHT = VIRTUAL_HEIGHT
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
@@ -346,7 +345,7 @@ function PlayState:update(dt)
                 end
                 -- trigger the brick's hit function, which removes it from play
                 brick:hit()
-                print("[DEBUG] Brick hit at x=" .. brick.x .. " y=" .. brick.y)
+                print("[PlayState] Brick hit at x=" .. brick.x .. " y=" .. brick.y)
                 self.chaos:removePod()
                 if not brick.inPlay then
                     self.brickCount = self.brickCount - 1

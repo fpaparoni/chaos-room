@@ -23,7 +23,7 @@ function MainMenuState:update(dt)
         end
 
     elseif self.phase == 'input' then
-        -- Scrittura input host/port
+        -- input host/port
         if love.keyboard.wasPressed('backspace') then
             local field = self.inputBuffer[self.currentField]
             self.inputBuffer[self.currentField] = field:sub(1, -2)
@@ -39,7 +39,7 @@ function MainMenuState:update(dt)
             if self.currentField == 'host' then
                 self.currentField = 'port'
             else
-                -- Salva nella Sessione e passa al menu
+                -- save host/port into Session static object
                 Session.host = self.inputBuffer.host
                 Session.port = self.inputBuffer.port
                 self.phase = 'menu'

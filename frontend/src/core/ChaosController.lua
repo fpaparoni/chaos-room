@@ -19,7 +19,7 @@ function ChaosController:init()
 end
 
 function ChaosController:startThread()
-    print("startThread")
+    print("[ChaosController] startThread")
     local code = [[
         local socket = require("socket")
         local ChaosService = require("src.core.ChaosService")

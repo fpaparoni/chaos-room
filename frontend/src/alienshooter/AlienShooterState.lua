@@ -45,11 +45,6 @@ local ENEMY_SCALAR = 0.8
 
 
 function AlienShooterState:enter()
-    --push:setupScreen(VIRTUAL_WIDTH*2, VIRTUAL_HEIGHT*2, WINDOW_WIDTH, WINDOW_HEIGHT, {
-    --    fullscreen = false,
-    --    resizable = false,
-   --    vsync = true
-    --})
     love.graphics.setDefaultFilter("nearest", "nearest")
 
     playerImage = love.graphics.newImage("assets/alienshooter/graphics/spaceship.png")
@@ -93,7 +88,7 @@ function AlienShooterState:update(dt)
         love.event.quit()
     elseif love.keyboard.wasPressed('space') then
         gSounds['fire']:play()
-        print("Space pressed! Projectile generated.")
+        print("[AlienShooterState] Space pressed! Projectile generated.")
         table.insert(bullets, {
             x = player.x + player.width / 2,
             y = player.y,

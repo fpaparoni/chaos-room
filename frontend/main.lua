@@ -33,7 +33,7 @@ function love.load()
 
     gStateMachine = StateMachine {
         ['main-menu'] = function() return MainMenuState() end,
-        -- gli altri stati vengono registrati al volo dopo la scelta
+        -- The other states are recorded on the fly after the selection.
     }
 
     gStateMachine:change('main-menu')
