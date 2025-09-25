@@ -33,7 +33,10 @@ class AzureEnv:
         return vms
 
     def count_running_services(self) -> int:
-        return len(self._get_running_vms())
+        if not super().check_service(self.service):
+            return 0
+        else:
+            return len(self._get_running_vms())
 
     def kill_random_service(self) -> bool:
         vms = self._get_running_vms()

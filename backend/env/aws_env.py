@@ -54,7 +54,10 @@ class AwsEnv(BaseEnvClient):
         """
         Return number of matched instances (int).
         """
-        instances = self._get_running_instances()
+        if not super().check_service(self.service):
+            return 0
+        else:
+            instances = self._get_running_instances()
         return len(instances)
 
     def kill_random_service(self) -> bool:

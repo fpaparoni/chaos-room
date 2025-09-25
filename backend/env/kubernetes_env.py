@@ -41,7 +41,6 @@ class KubernetesEnv(BaseEnvClient):
 
     def count_running_services(self) -> int:
         if not super().check_service(self.service):
-            print("Dice che non va il servizio")
             return 0
         else:
             return len(self._get_running_pods())
@@ -56,5 +55,5 @@ class KubernetesEnv(BaseEnvClient):
             self.v1.delete_namespaced_pod(name=victim.metadata.name, namespace=self.namespace)
             return True
         except Exception as e:
-            print(f"[ERROR] Failed to delete pod {victim.metadata.name}: {e}")
+            print(f"[KubernetesEnv] Failed to delete pod {victim.metadata.name}: {e}")
             return False
