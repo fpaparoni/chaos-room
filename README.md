@@ -143,7 +143,7 @@ To run the client, you need to have [LOVE2D](https://github.com/love2d/love) ins
 love frontend/
 ```
 
-When the game starts, you will first be prompted to enter the IP address of your backend. Use 127.0.0.1 if you are running the client on the same machine as the server.Next, you will be asked for the port number. By default, this is 8181, unless you have changed the server configuration.
+When the game starts, you will first be prompted to enter the IP address of your backend. Use 127.0.0.1 if you are running the client on the same machine as the server.Next, you will be asked for the port number. By default, this is 8181, unless you have changed the server configuration. The three games included in ChaosRoom can be played using the keyboard: arrow keys for movement (up/down/left/right), Enter, and Space (to shoot in Alien Shooter). The Zombie Shooter game, however, requires the mouse for movement and mouse clicks to shoot. 
 
 After that, you simply choose how you want to make your test environment “suffer.” 🙂
 
