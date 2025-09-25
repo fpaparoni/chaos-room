@@ -164,9 +164,9 @@ To exit the game at any time, just press ESC.
 
 [Watch the ChaosRoom tutorial](https://vimeo.com/1122008380)
 
-## Creating the LÖVE Executable
+## Creating the LÖVE file
 
-You can package the client into a `.love` executable by navigating to the `frontend` folder and running:
+You can package the client into a `.love` file by navigating to the `frontend` folder and running:
 
 ```bash
 zip -9 -r ../chaos-room.love *
