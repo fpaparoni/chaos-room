@@ -23,6 +23,7 @@ end
 function WinState:update(dt)
     if love.keyboard.wasPressed('return') then
         love.event.quit()  -- quit game
+    end
 end
 
 function WinState:render()
