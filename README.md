@@ -12,6 +12,7 @@ So, when someone sees you “playing,” you can honestly say: *“I’m perform
 
 
 - [Architecture](#architecture)  
+- [Project structure](#project-structure)  
 - [Server setup](#server-setup)  
 - [Kubernetes quick test](#kubernetes-quick-test)  
 - [Starting the Client](#starting-the-client)  
