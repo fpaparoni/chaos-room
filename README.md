@@ -16,7 +16,7 @@ So, when someone sees you “playing,” you can honestly say: *“I’m perform
 - [Server setup](#server-setup)  
 - [Kubernetes quick test](#kubernetes-quick-test)  
 - [Starting the Client](#starting-the-client)  
-- [Creating the LÖVE Executable](#creating-the-löve-executable)
+- [Creating the LÖVE Executable](#creating-the-löve-file)
 - [Credits](#credits)
 
 ## Architecture
