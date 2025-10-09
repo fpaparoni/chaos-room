@@ -58,7 +58,7 @@ You can test different environments: **Kubernetes**, **AWS**, or **Azure**. Choo
 | **AWS** | Within an AWS subscription, you will need to configure an Auto Scaling Group with the EC2 instances of your service. These instances must have a specific tag that will be used to identify which machines are part of the test. ChaosRoom will trigger the termination of the tagged EC2 instances, monitoring the system’s scaling speed. The machine used to start the ChaosRoom server must have the **AWS CLI** installed and already configured for your subscription.|
 | **Azure** | Within an Azure subscription, you will need to configure an Azure Virtual Machine Scale Set (VMSS) with the VMs of your service. These VMs must also have a specific tag that will be used to identify which machines are part of the test. ChaosRoom will trigger the termination of the tagged VMs, monitoring the system’s scaling speed. The machine used to start the ChaosRoom server must have the **Azure CLI** installed and authenticated against your subscription.|
 
-Below is the configuration required to start the ChaosRoom server. This involves editing the **server/config.yaml** file and inserting the appropriate configurations based on the system you want to test.
+Below is the configuration required to start the ChaosRoom server. This involves editing the **backend/config.yaml** file and inserting the appropriate configurations based on the system you want to test.
 
 ```yaml
 # config.yaml in backend
@@ -89,7 +89,8 @@ azure:
 Next, you will need to start the server using the Python interpreter available on your system:
 
 ```bash
-python server/main.py
+cd backend
+python main.py
 ```
 
 If the **`service`** parameter is enabled in the configuration file, you can specify an HTTP service URL that represents the exposed endpoint of your pods. This allows ChaosRoom to check whether the service remains **reachable and functional** when the endpoint is called, even in scenarios where multiple pods (e.g., 2–3 replicas) are running behind it.
@@ -156,7 +157,7 @@ To run the client, you need to have [LOVE2D](https://github.com/love2d/love) ins
 love frontend/
 ```
 
-When the game starts, you will first be prompted to enter the IP address of your backend. Use 127.0.0.1 if you are running the client on the same machine as the server.Next, you will be asked for the port number. By default, this is 8181, unless you have changed the server configuration. The three games included in ChaosRoom can be played using the keyboard: arrow keys for movement (up/down/left/right), Enter, and Space (to shoot in Alien Shooter). The Zombie Shooter game, however, requires the mouse for movement and mouse clicks to shoot. 
+When the game starts, you will first be prompted to enter the IP address of your backend. Use 127.0.0.1 if you are running the client on the same machine as the server. Next, you will be asked for the port number. By default, this is 8181, unless you have changed the server configuration. The three games included in ChaosRoom can be played using the keyboard: arrow keys for movement (up/down/left/right), Enter, and Space (to shoot in Alien Shooter). The Zombie Shooter game, however, requires the mouse for movement and mouse clicks to shoot. 
 
 After that, you simply choose how you want to make your test environment “suffer.” 🙂
 
